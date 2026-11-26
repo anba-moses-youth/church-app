@@ -6,7 +6,10 @@ function load(f,cb){if(P[f]===true)return cb();if(P[f]){P[f].push(cb);return}P[f
 function norm(s){return s.replace(/االله/g,'الله').replace(/[\u064B-\u0652\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')}
 var SRC='<p class="note" style="margin-top:14px">المصدر: ملفات الكنيسة (نص بدون تشكيل). للاستخدام داخل الكنيسة.</p>';
 var _b=window.bible;
+window.dcOpen=function(){st.sub='dc';render()};
+function dcl(cb){if(window.DPV)return cb();var e=document.createElement('script');e.src='dp-ui.js?v=1';e.onload=cb;document.head.appendChild(e)}
 window.bible=function(){
+ if(st.sub==='dc'){$('#m').innerHTML='<div class="card">جاري التحميل...</div>';dcl(function(){DPV.mount($('#m'),'',function(){st.sub=null;render()})});return}
  if(st.sub==='search')return bsr();
  if(st.book&&st.ch!=null&&MAP[st.book]){var m=MAP[st.book];
   $('#m').innerHTML='<div class="card">جاري تحميل السفر...</div>';
@@ -16,7 +19,7 @@ window.bible=function(){
    $('#m').innerHTML='<div class="card"><div class="row"><h3 class="f">'+st.book+' '+AR(st.ch)+'</h3><button class="btn s '+(bm?'g':'')+'" onclick="togBm()">🔖</button></div><div class="txt" style="font-size:'+st.fs+'px;line-height:2">'+c.map(function(v,i){return '<sup style="color:#b8860b;font-weight:bold;margin-left:3px">'+AR(i+1)+'</sup>'+esc(v.replace(/االله/g,'الله'))}).join(' ')+'</div>'+
    '<div class="row" style="margin-top:12px"><button class="btn s" onclick="st.fs+=2;render()">A+</button><button class="btn s" onclick="st.fs=Math.max(14,st.fs-2);render()">A-</button><span class="f"></span>'+(st.ch>1?'<button class="btn s" onclick="openCh(st.book,'+(st.ch-1)+')">السابق</button>':'')+(st.ch<n?'<button class="btn s" onclick="openCh(st.book,'+(st.ch+1)+')">التالي</button>':'')+'</div>'+SRC+'</div>';
    $('#m').scrollTop=0});return}
- _b()};
+ _b();if(!st.sub&&!st.book)$('#m').insertAdjacentHTML('beforeend','<button class="btn" style="width:100%;margin-top:14px" onclick="dcOpen()">📜 الأسفار القانونية الثانية</button>')};
 function bsr(){$('#m').innerHTML='<input id="bq" placeholder="اكتب كلمة أو جزء من آية" oninput="bsq(this.value)"><div id="bl"></div><div id="bst" class="note"></div>';bsq('')}
 var seq=0;
 window.bsq=function(q){var my=++seq;q=norm(q.trim());var o=$('#bl');if(!q){o.innerHTML='';$('#bst').textContent='البحث في النصوص المتاحة: '+Object.keys(MAP).length+' سفر';return}
