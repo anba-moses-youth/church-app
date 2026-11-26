@@ -2,7 +2,7 @@
 var IDX=[["متى", 1, 28], ["مرقس", 2, 16], ["لوقا", 3, 24], ["يوحنا", 4, 21], ["أعمال الرسل", 5, 28], ["رومية", 6, 16], ["كورنثوس الأولى", 6, 16], ["كورنثوس الثانية", 6, 13], ["غلاطية", 6, 6], ["أفسس", 6, 6], ["فيلبي", 7, 4], ["كولوسي", 7, 4], ["تسالونيكي الأولى", 7, 5], ["تسالونيكي الثانية", 7, 3], ["تيموثاوس الأولى", 7, 6], ["تيموثاوس الثانية", 7, 4], ["تيطس", 7, 3], ["فليمون", 7, 1], ["العبرانيين", 7, 13], ["يعقوب", 7, 5], ["بطرس الأولى", 7, 5], ["بطرس الثانية", 7, 3], ["يوحنا الأولى", 7, 5], ["يوحنا الثانية", 7, 1], ["يوحنا الثالثة", 7, 1], ["يهوذا", 7, 1], ["الرؤيا", 8, 22]];
 var MAP={};IDX.forEach(function(x){MAP[x[0]]=x});
 var P={};
-function load(f,cb){if(P[f]===true)return cb();if(P[f]){P[f].push(cb);return}P[f]=[cb];var s=document.createElement('script');s.src=(typeof f==='number'?'bbnt'+f:f)+'.js?v=1';s.onload=function(){var q=P[f];P[f]=true;q.forEach(function(c){c()})};s.onerror=function(){var q=P[f];P[f]=null;$('#m').innerHTML='<div class="card">تعذر تحميل السفر. اتأكد من النت وجرب تاني.</div>'};document.head.appendChild(s)}
+function load(f,cb){if(P[f]===true)return cb();if(P[f]){P[f].push(cb);return}P[f]=[cb];var s=document.createElement('script');s.src=(/^\d+$/.test(f)?'bbnt'+f:f)+'.js?v=1';s.onload=function(){var q=P[f];P[f]=true;q.forEach(function(c){c()})};s.onerror=function(){var q=P[f];P[f]=null;$('#m').innerHTML='<div class="card">تعذر تحميل السفر. اتأكد من النت وجرب تاني.</div>'};document.head.appendChild(s)}
 function norm(s){return s.replace(/[\u064B-\u0652\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')}
 var SRC='<p class="note" style="margin-top:14px">المصدر: ملفات الكنيسة (نص بدون تشكيل). للاستخدام داخل الكنيسة.</p>';
 var _b=window.bible;
